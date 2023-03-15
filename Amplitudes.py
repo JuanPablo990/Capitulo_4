@@ -2,11 +2,11 @@
 import libreria_complejos as lc
 import Vectores_matrices as vc
 import math
-v1 = [[-3,-1],[0,-2],[0,1],[2,0]]
-def amplitudes_complejas (v1):
-    resultado = vc.normaV(v1)
-    print(v1)
+v1 = [[[-3,-1]],[[0,-2]],[[0,1]],[[2,0]]]
+# Probabilidad de observación
+def probabilidad (v1,a):
+    resultado = ((lc.modulo(v1[a][0]))**2 )/(vc.normaVector(v1)**2)
     return resultado
 
 if __name__ == '__main__':
-    amplitudes_complejas(v1)
+    print(probabilidad(v1,2))
