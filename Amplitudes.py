@@ -15,7 +15,7 @@ def probabilidad_transicion(v1,v2):
     # normalizar los vectores
     vn1= vc.productoEscalar_Vector(v1,(1/vc.normaVector(v1),0))
     vn2 = vc.productoEscalar_Vector(v2, (1 / vc.normaVector(v2), 0))
-    resultado = vc.productoInterno_Vector(vc.adjunta_Matriz_Vector(vn1),vn2)
+    resultado = vc.productoInterno_Vector(vn1,vn2)
     return resultado
 
 
