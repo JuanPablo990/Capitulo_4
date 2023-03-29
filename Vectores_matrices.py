@@ -191,3 +191,21 @@ def productoTensorial_Matriz_Vector(a, b):
         for j in range(len(nuevaMatriz[0])):
             nuevaMatriz[i][j] = lab1.producto(a[i // filaM2][j // columnaM2], b[i % filaM2][j % columnaM2])
     return nuevaMatriz
+
+
+""" Sistema cuántico de partícula en una linea """
+
+def probabilidad (pos,vector):
+    print(vector)
+    a= norma(vector[pos])
+    b=norma_vector(vector)
+    prob=(a/b)
+    respuesta=prob*100
+    return respuesta
+
+def amplitudTransicion(matriz,vector):
+    a = vectorxmatriz(vector,matriz)
+    conjugado = inversovector(a)
+    respuesta = producto_vectores(conjugado,vector)
+    return respuesta
+
