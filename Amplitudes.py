@@ -109,7 +109,7 @@ def transitarVector(ket,ket2):
     ket1=lc.transpuesta([ket])
     bra=vc.matrizConjugada([ket2])
     car=vc.multiplicacionMatrizMatriz(bra,ket1)[0][0]
-    normaBra=vc.normaMatriz(bra)
+    normaBra=vc.normaMatrsi(bra)
     normaket=vc.normaMatriz(ket1)
     car2=(normaBra*normaket,0)
     return lc.division(car,car2)
