@@ -4,176 +4,193 @@ from tkinter import messagebox
 import math
 import numpy as np
 
-def sumavector(vector1, vector2):
-    vectorfinal = []
-    if len(vector1) == len(vector2):
-        for i in range(len(vector1)):
-            vectorfinal.append(sumar(vector1[i], vector2[i]))
-    return vectorfinal
-
-
-def inversovector(vector1):
-    vectorfinal = []
-    for i in range(len(vector1)):
-        vectorfinal.append(conjugado(vector1[i]))
-    return vectorfinal
-
-
-def producto_vectores(vector1, vector2):
-    resultado = (0, 0)
-    for i in range(len(vector1)):
-        resultado = sumar(resultado, multiplicar(vector1[i], vector2[i]))
-    return resultado
-
-
-def producto_vectoresReales(vector1, vector2):
-    resultado = 0
-    for i in range(len(vector1)):
-        resultado += vector1[i] * ector2[i]
-    return resultado
-
-
-def producto_interno(vector1, vector2):
-    return producto_vectores((conjugada_vector(vector1)), vector2)
-
-
-def escalar_vector(numero, vector1):
-    operacion = []
-    for i in vector1:
-        resultado = multiplicar(numero, i)
-        operacion.append(resultado)
-    return operacion
-
-
-def adicion_matrices(matriz1, matriz2):
-    if len(matriz1) != len(matriz2) or len(matriz1[0]) != len(matriz2):
-        print("La suma no esta definida para matrices de diferente tamaño")
+#1. Adición de vectores complejos.
+def suma_Vector(a, b):
+    if len(a) != len(b):
+        messagebox.showerror("ERROR!", "Los vectores no pueden ser operados, no son de igual dimension")
     else:
-        resultado = []
-        for i in range(len(matriz1)):
-            operacion = []
-            for j in range(len(matriz2)):
-                operacion.append(sumar(matriz1[i][j], matriz2[i][j]))
-            resultado.append(operacion)
-        return resultado
+        rtaVector = [[None for fila in range(1)] for column in range(len(a))]
+        fila = len(a)
+        for i in range(fila):
+            rtaVector[i][0] = lab1.suma(a[i][0], b[i][0])
+        return rtaVector
 
+#1.2. Resta de vectores complejos.
+def resta_Vector(a, b):
+    if len(a) != len(b):
+        messagebox.showerror("ERROR!", "Los vectores no pueden ser operados, no son de igual dimension")
+    else:
+        rtaVector = [[None for fila in range(1)] for column in range(len(a))]
+        fila = len(a)
+        for i in range(fila):
+            rtaVector[i][0] = lab1.resta(a[i][0], b[i][0])
+        return rtaVector
 
-def matriz_inversa(matriz1):
-    resultado = []
-    for i in range(len(matriz1)):
-        resultado.append(inversovector(matriz1[i]))
-    return resultado
+#2. Inverso (aditivo) de un vector complejos.
+def inversoAditivo_Vector(a):
+    rtaVector = [[None for fila in range(1)] for column in range(len(a))]
+    fila = len(a)
+    for i in range(fila):
+        rtaVector[i][0] = lab1.producto(a[i][0], [-1, 0])
+    return rtaVector
 
+#3. Multiplicación de un escalar por un vector complejo.
+def productoEscalar_Vector(a, b):
+    fila = len(a)
+    rta = [[None for column in range(len(a[0]))] for row in range(len(a))]
+    for i in range(fila):
+        rta[i][0] = lab1.producto(a[i][0], b)
+    return rta
 
-def escalar_matriz(numero, matriz1):
-    resultado = []
-    for i in range(len(matriz1)):
-        operacion = []
-        for j in range(len(matriz1)):
-            operacion.append(multiplicar(numero, matriz1[i][j]))
-        resultado.append(operacion)
-    return resultado
+#4. Adición de matrices complejas.
+def suma_Matriz(a, b):
+    fila = len(a)
+    columna = len(a[0])
+    if len(a) != len(b) or len(a[0]) != len(b[0]):
+        messagebox.showerror("ERROR!", "Los matrices pueden ser operadas, no son de igual dimension")
+    else:
+        rtaMatriz = [[None for column in range(columna)] for row in range(fila)]
 
+        for i in range(fila):
+            for j in range(columna):
+                rtaMatriz[i][j] = lab1.suma(a[i][j], b[i][j])
+        return rtaMatriz
 
-def transpuesta_matriz(matriz1):
-    matriz = [0] * len(matriz1[0])
-    for i in range(len(matriz1)):
-        matriz[i] = [0] * len(matriz1)
-        for j in range(len(matriz1[i])):
-            matriz[i][j] = matriz1[j][i]
-    return matriz
+#5. Inversa (aditiva) de una matriz compleja.
+def inversoAditivo_Matriz(a):
+    fila = len(a)
+    columna = len(a[0])
+    for i in range(fila):
+        for j in range(columna):
+            a[i][j] = lab1.producto(a[i][j], [-1, 0])
+    return a
 
+#6. Multiplicación de un escalar por una matriz compleja.
+def productoEscalar_Matriz(a, b):
+    fila = len(a)
+    columna = len(a[0])
+    rta = [[None for column in range(columna)] for row in range(fila)]
+    for i in range(fila):
+        for j in range(columna):
+            rta[i][j] = lab1.producto(a[i][j], b)
+    return rta
 
-def transpuesta_vector(vector1):
-    return vector1
+#7. Transpuesta de una matriz/vector
+def transpuesta_Matriz_Vector(a):
+    fila = len(a)
+    columna = len(a[0])
+    transpuesta = [[None for column in range(fila)] for row in range(columna)]
+    for i in range(fila):
+        for j in range(columna):
+            transpuesta[j][i] = a[i][j]
+    return transpuesta
 
+#8. Conjugada de una matriz/vector
+def conjugado_Matriz_Vector(a):
+    fila = len(a)
+    columna = len(a[0])
+    rta = [[None for j in range(columna)] for i in range(fila)]
+    if columna > 1:
+        for i in range(fila):
+            for j in range(columna):
+                rta[i][j] = lab1.conjugado(a[i][j])
+    else:
+        for i in range(fila):
+            rta[i][0] = lab1.conjugado(a[i][0])
+    return rta
 
-def conjugada_matriz(matriz1):
-    resultado = []
-    for i in range(len(matriz1)):
-        operacion = []
-        for j in range(len(matriz1)):
-            operacion.append(conjugado(matriz1[i][j]))
-        resultado.append(operacion)
-    return resultado
+#9. Adjunta (daga) de una matriz/vector
+def adjunta_Matriz_Vector(a):
+    conj = a[:]
+    newConj = conjugado_Matriz_Vector(conj)
+    trans = transpuesta_Matriz_Vector(newConj)
+    return trans
 
+#10. Producto de dos matrices (de tamaños compatibles)
+def producto_Matriz(a, b):
+    filaA = len(a)
+    filaB = len(b)
+    columnaA = len(a[0])
+    columnaB = len(b[0])
+    if columnaA != filaB:
+        messagebox.showerror("ERROR!", "Los matrices pueden ser operadas, no son compatibles")
+    else:
+        rta = [[[0, 0] for columna in range(columnaB)] for fila in range(filaA)]
 
-def conjugada_vector(vector1):
-    resultado = []
-    for i in vector1:
-        resultado.append(conjugado(i))
-    return resultado
+        for i in range(filaA):
+            for j in range(columnaB):
+                for k in range(filaB):
+                    rta[i][j] = lab1.suma(rta[i][j], lab1.producto(a[i][k], b[k][j]))
+        return rta
 
+#11. Función para calcular la "acción" de una matriz sobre un vector.
+def accion_MatrizSobreVector(a, b):
+    return producto_Matriz(a, b)
 
-def adjunta_matriz(matriz1):
-    return transpuesta_matriz(conjugada_matriz(matriz1))
+#12. Producto interno de dos vectores
+def productoInterno_Vector(a, b):
+    newVector = adjunta_Matriz_Vector(a)
+    return producto_Matriz(newVector, b)
 
+#13. Norma de un vector
+def normaVector(a):
+    fila = len(a)
+    columna = len(a[0])
+    rta = 0
+    for i in range(fila):
+        for j in range(columna):
+            rta += a[i][j][0] ** 2 + a[i][j][1] ** 2
+    return math.sqrt(rta)
 
-def adjunta_vector(vector1):
-    return conjugada_vector(vector1)
+#14. Distancia entre dos vectores
+def distanciaVector(a, b):
+    resta = resta_Vector(a, b)
+    norma = normaVector(resta)
+    return norma
+#15.Valores  y vectores propios de una matriz
+#valores propios de una matriz
+def Valores_propios(v1):
+    mat = np.array(v1)
+    eigenvalue, featurevector = np.linalg.eig(mat)
+    return eigenvalue
+#vectores propios de una matriz
+def vectores_propios(v1):
+    mat = np.array(v1)
+    eigenvalue, featurevector = np.linalg.eig(mat)
+    return featurevector
 
+#16. Revisar si una matriz es unitaria
+def matrizUnitaria(a):
+    daga = adjunta_Matriz_Vector(a)
+    operacion = producto_Matriz(a, daga)
+    fila = len(a)
+    columna = len(a[0])
+    matrizIdentidad = [[[1, 0] if x == y else [0, 0] for y in range(columna)] for x in range(fila)]
+    for i in range(fila):
+        for j in range(columna):
+            operacion[i][j] = [round(operacion[i][j][0]), round(operacion[i][j][1])]
+    if operacion == matrizIdentidad:
+        return True
+    else:
+        return False
 
-def producto_matrices(matriz1, matriz2):
-    resultado = []
-    for i in range(len(matriz1)):
-        operacion = []
-        for j in range(len(matriz2[0])):
-            save = (0, 0)
-            for k in range(len(matriz2)):
-                save = sumar(multiplicar(matriz1[i][k], matriz2[k][j]), save)
-            operacion.append(save)
-        resultado.append(operacion)
-    return resultado
+#17. Revisar si una matriz es Hermitiana
+def matrizHermitiana(a):
+    daga = adjuntaMatrizVector(a)
+    if daga == a:
+        return True
+    else:
+        return False
 
-
-def producto_matrices_reales(matriz1, matriz2):
-    resultado = []
-    for i in range(len(matriz1)):
-        fila = []
-        for j in range(len(matriz2[0])):
-            save = 0
-            for k in range(len(matriz2)):
-                multi = matriz1[i][k] * matriz2[k][j]
-                save += multi
-            fila.append(save)
-        resultado.append(fila)
-    return resultado
-
-
-def norma(numero1):
-    return (numero1[0] ** 2 + numero1[1] ** 2)
-
-
-def norma_vector(vectorreal1):
-    resultado = 0
-    for i in vectorreal1:
-        resultado = resultado + norma(i)
-    return resultado
-
-
-def distancia_vectores(vectorreal1, vectorreal2):
-    resultado = ((vectorreal1[0] - vectorreal2[0]) ** 2 + (vectorreal1[1] - vectorreal2[1]) ** 2) ** 0.5
-    return resultado
-
-
-def matriz_unitaria(matriz1):
-    resultado = producto_matrices(matriz1, adjunta_matriz(matriz1))
-    for i in range(len(matriz1)):
-        for j in range(len(matriz1[0])):
-            posicion = resultado[i][j]
-            if (i == j and (posicion[0] != 1 or posicion[1] != 0)):
-                return False
-            elif (i != j and (posicion[0] != 0 or posicion[1] != 0)):
-                return False
-    return True
-
-
-def matriz_hermitiana(matriz1):
-    for i in range(len(matriz1)):
-        for j in range(len(matriz1[0])):
-            if (matriz1[i][j] != adjunta_matriz(matriz1)[i][j]):
-                return False
-    return True
+#18. Producto tensor de dos matrices/vectores
+def productoTensorial_Matriz_Vector(a, b):
+    filaM1, filaM2 = len(a), len(b)
+    columnaM1, columnaM2 = len(a[0]), len(b[0])
+    nuevaMatriz = [[[0, 0] for column in range(columnaM1 * columnaM2)] for row in range(filaM1 * filaM2)]
+    for i in range(len(nuevaMatriz)):
+        for j in range(len(nuevaMatriz[0])):
+            nuevaMatriz[i][j] = lab1.producto(a[i // filaM2][j // columnaM2], b[i % filaM2][j % columnaM2])
+    return nuevaMatriz
 
 
 def producto_tensor_vectores(vector1, vector2):
@@ -185,28 +202,6 @@ def producto_tensor_vectores(vector1, vector2):
             resultado = multiplicar(numero, numero2)
             operacion.append(resultado)
     return operacion
-
-
-def producto_tensor_matrices(matriz1, matriz2):
-    operacion = []
-    for i in range(len(matriz1)):
-        for j in range(len(matriz2)):
-            operacion.append(producto_tensor_vectores(matriz1[i], matriz2[j]))
-    return operacion
-
-
-def vectorxmatriz(vector, matriz):
-    ans = []
-    for i in range(len(matriz)):
-        ans.append(producto_vectores(vector, matriz[i]))
-    return ans
-
-
-def vectormatrizReal(vector, matriz):
-    resultado = []
-    for i in range(len(matriz)):
-        resultado.append(producto_vectoresReales(vector, matriz[i]))
-    return resultado
 
 
 "Sistema cuántico de partícula en una linea"
