@@ -18,8 +18,6 @@ El sistema consiste en una partícula confinada a un conjunto discreto de posici
 4. Se considera la dinámica del sistema. Ahora con una serie de matrices Un el sistema calcula el estado final a partir de un estado inicial.
 
 # REALICE LOS SIGUIENTES PROBLEMAS E INCLUYALOS COMO EJEMPLOS
-# Descripción
-En este repositorio se simularan algunos problemas de teoria cuantica
 
 # 4.3.1
 En este ejercicio se encontraran todos los estados posibles en los que puede pasar el sistema descrito en el ejercicio 4.2.2 después de que se haya realizado una medición. ¿Cuál es la probabilidad de que un estado de inicio normalizado | ψ hará la transición a un vector específico?
